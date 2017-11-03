@@ -8,7 +8,6 @@
 const AWS = require('aws-sdk');
 
 module.exports = {
-    isLambda: false,
     defaultProfile: "B2_IA@l-b2-dev",
     switchRole: function(profile = this.defaultProfile) {
         const credentials = new AWS.SharedIniFileCredentials({profile: profile});
