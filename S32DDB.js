@@ -6,7 +6,7 @@
 'use strict';
 
 const AWS = require("aws-sdk");
-const commons = require('../commons.js');
+const commons = require('./commons.js');
 
 // AWS Switch Role
 commons.switchRole();

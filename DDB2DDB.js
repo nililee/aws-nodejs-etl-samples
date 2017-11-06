@@ -8,7 +8,7 @@
 const AWS = require("aws-sdk");
 const uuid = require('node-uuid');
 const dateFormat = require('dateformat');
-const commons = require('../commons.js');
+const commons = require('./commons.js');
 
 // AWS Switch Role
 commons.switchRole();

@@ -6,7 +6,7 @@
 'use strict';
 
 const AWS = require("aws-sdk");
-const commons = require('../commons.js');
+const commons = require('./commons.js');
 
 // AWS Switch Role
 commons.switchRole();
@@ -71,7 +71,6 @@ queryPromise.then(function(data) {
 */
 
 // Scanning
-/*
 var params = {
     TableName: "POC_MOVIES_SOURCE",
     ProjectionExpression: "#yr, title, info.rating",
@@ -97,4 +96,3 @@ scanPromise.then(function(data) {
         console.log("#" + (++idx), movie.title, movie.info.rating);
     });
 }).catch(commons.handleError);
-*/
