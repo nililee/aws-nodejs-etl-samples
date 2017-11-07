@@ -12,20 +12,34 @@ const commons = require('./commons.js');
 // AWS Switch Role
 commons.switchRole();
 
-var s3 = new AWS.S3();
 var docClient = new AWS.DynamoDB.DocumentClient();
+var s3 = new AWS.S3();
 
+// Query - All Movies Released in a Year
 var params = {
-    Bucket: "poc-etl-movies",
-    Key: "movies_20171106113713"
+    TableName: "POC_MOVIES_SOURCE",
+    KeyConditionExpression: "#yr = :yyyy",
+    ExpressionAttributeNames: {
+        "#yr": "year"
+    },
+    ExpressionAttributeValues: {
+        ":yyyy": 2000
+    }
 };
 
-// Get S3 bucket data
-var getObjectPromise = s3.getObject(params).promise();
-getObjectPromise.then(function(data) {
-    
-    var movies = JSON.parse(data.Body.toString());
-    //console.log("Retrieved s3 data: \n" + JSON.stringify(movies));
+console.log("Querying the table...");
+
+var movies = [];
+
+var queryPromise = docClient.query(params).promise();
+queryPromise.then(function(data) {
+
+    console.log(data.Items.length + " records found.");
+
+    var idx = 0;
+    data.Items.forEach(function(movie) {
+        movies.push(movie);
+    });
 
     putMoviesToRDS(movies);
 
@@ -33,7 +47,7 @@ getObjectPromise.then(function(data) {
 
 // Put all movie data to target RDS
 var putMoviesToRDS = function(movies) {
-
+    
     console.log("Importing movies into RDS. Please wait.");
 
     var data = [];

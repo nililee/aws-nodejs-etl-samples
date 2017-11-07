@@ -14,6 +14,7 @@ commons.switchRole();
 var dynamodb = new AWS.DynamoDB();
 
 var params = {
+    //TableName : "POC_MOVIES_SOURCE",
     TableName : "POC_MOVIES_TARGET",
     KeySchema: [
         { AttributeName: "year", KeyType: "HASH" },   // Partition key

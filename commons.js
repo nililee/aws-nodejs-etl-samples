@@ -11,13 +11,14 @@ module.exports = {
     enableSwitchRole: true,
     defaultProfile: "B2_IA@l-b2-dev",
     switchRole: function(profile = this.defaultProfile) {
-        if(enableSwitchRole) {
+        if(this.enableSwitchRole) {
             const credentials = new AWS.SharedIniFileCredentials({profile: profile});
             AWS.config.credentials = credentials;
-            AWS.config.update({
-                region: "us-east-1"
-            });
         }
+        AWS.config.update({
+            //region: "us-east-1"
+            region: "ap-northeast-1"
+        });
     },
     handleError: function(err) {
         console.error("Error: \n", JSON.stringify(err, null, 2));
